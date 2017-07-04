@@ -1,0 +1,1 @@
+- Migrate application's logic to redux.js
