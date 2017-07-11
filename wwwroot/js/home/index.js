@@ -49,7 +49,9 @@ var paginatedList = window.application.paginatedList;
     var update = window.application.home.update;
 
     function attachEvents(state) {
-        $().ready(js.eventLinker(initializeView, state));
+        $().ready(function(event) {
+            initializeView(state, event);
+        });
     }
 
     function initializeView(state, event) {
@@ -58,27 +60,19 @@ var paginatedList = window.application.paginatedList;
     }
 
     function _loadEmployees(state) {
-        js.longOperation(employeesPromise, htmlNodes.employeesList.loader);
-
-        function employeesPromise() {
-            return ajax.get('/api/employee/getMostSkilled', {}, [])
-            .then(function(employees) {
-                state.employees = employees;
-                update.employees(state);
-            });
-        }
+        js.longOperation(ajax.get('/api/employee/getMostSkilled', {}, []), htmlNodes.employeesList.loader)
+        .then(function(employees) {
+            state.employees = employees;
+            update.employees(state);
+        });
     }
 
     function _loadSkills(state) {
-        js.longOperation(skillsPromise, htmlNodes.skillsList.loader);
-
-        function skillsPromise() {
-            return ajax.get('/api/skill/getRearest', {}, [])
-            .then(function(skills) {
-                state.skills = skills;
-                update.skills(state);
-            });
-        }
+        js.longOperation(ajax.get('/api/skill/getRearest', {}, []), htmlNodes.skillsList.loader)
+        .then(function(skills) {
+            state.skills = skills;
+            update.skills(state);
+        });
     }
 
     window.application.home.attachEvents = attachEvents;

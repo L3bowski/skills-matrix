@@ -1,1 +1,2 @@
-- Migrate application's logic to redux.js
+- Configure production MySql database server -> (Remove SQL Server VM and Enable MySQL)
+- Remove todo.md

@@ -37,32 +37,32 @@ var paginatedList = window.application.paginatedList;
 
     function attachEvents(state) {
         var paginatedListEventHandlers = {
-            pageButtons: js.eventLinker(function(state, event) {
+            pageButtons: function(event) {
                 paginatedList.stateUpdaters.pages(state, event);
                 _loadSkills(state);
-            }, state),
-            pageSizeList: js.eventLinker(function(state, event) {
+            },
+            pageSizeList: function(event) {
                 paginatedList.stateUpdaters.pageSize(state, event);
                 _loadSkills(state);
-            }, state),
-            searcher: js.eventLinker(function (state, event) {
+            },
+            searcher: function (event) {
                 state.keywords = event.target.value;
                 state.page = 0;
                 state.pageOffset = 0;
                 _loadSkills(state);
-            }, state),
-            clearKeywords: js.eventDelayer(js.eventLinker(clearKeywords, state))
+            },
+            clearKeywords: function(event) {
+                state.keywords = '';
+                state.page = 0;
+                state.pageOffset = 0;
+                _loadSkills(state);
+            }
         };
 
         paginatedList.attachEvents(htmlNodes, paginatedListEventHandlers);
-        $().ready(js.eventLinker(initializeView, state));
-    }
-
-    function clearKeywords(state, event) {
-        state.keywords = '';
-        state.page = 0;
-        state.pageOffset = 0;
-        _loadSkills(state);
+        $().ready(function(event) {
+            initializeView(state, event);
+        });
     }
 
     function initializeView(state, event) {
@@ -70,20 +70,16 @@ var paginatedList = window.application.paginatedList;
     }
 
     function _loadSkills(state) {
-        js.longOperation(skillsPromise, htmlNodes.loader);
-
-        function skillsPromise() {
-            return ajax.get('/api/skill', {
-                keywords: state.keywords,
-                page: state.page + state.pageOffset,
-                pageSize: state.pageSize
-            }, paginatedList.defaultInstance)
-            .then(function(paginatedList) {
-                state.results = paginatedList.Items;
-                state.totalPages = paginatedList.TotalPages;
-                update.skills(state);
-            });
-        }
+        js.longOperation(ajax.get('/api/skill', {
+            keywords: state.keywords,
+            page: state.page + state.pageOffset,
+            pageSize: state.pageSize
+        }, paginatedList.defaultInstance), htmlNodes.loader)
+        .then(function(paginatedList) {
+            state.results = paginatedList.Items;
+            state.totalPages = paginatedList.TotalPages;
+            update.skills(state);
+        });
     }
 
     window.application.skillsList.attachEvents = attachEvents;
