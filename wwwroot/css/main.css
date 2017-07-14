@@ -33,52 +33,6 @@ a.reset:hover {
     margin-right: 0;
 }
 
-.dynamic-content {
-    position: relative;
-    min-height: 0;
-}
-
-.dynamic-content > .loader {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: white;
-    z-index: 10;
-    -webkit-transition: opacity 0.5s;
-    transition: opacity 0.5s;
-}
-
-.dynamic-content.loading {
-    min-height: 200px;
-    -webkit-transition: min-height 0.5s;
-    transition: min-height 0.5s;
-}
-
-.dynamic-content.loading > .loader {
-    display: block;
-    opacity: 1;
-    -webkit-transition: opacity 0.5s;
-    transition: opacity 0.5s;
-}
-
-.dynamic-content.finished > .loader {
-    display: none;
-}
-
-ul.clickable > li {
-    cursor: pointer;
-    padding: 0;
-}
-
-ul.clickable > li > a,
-ul.clickable > li > span {
-    display: block;
-    padding: 10px 15px;
-}
-
 .badge.floating {
     float: right;
 }
@@ -87,6 +41,10 @@ ul.clickable > li > span {
     max-width: 100%;
     margin: auto;
     display: block;
+}
+
+.paginated-list {
+    margin-bottom: 20px;
 }
 
 .paginated-list .list-group {
@@ -106,18 +64,29 @@ ul.clickable > li > span {
     min-width: auto;
 }
 
-.pagination-bar ul.clickable > li > a,
-.pagination-bar ul.clickable > li > span {
+.paginated-list ul.clickable > li {
+    cursor: pointer;
+    padding: 0;
+}
+
+.paginated-list ul.clickable > li > a,
+.paginated-list ul.clickable > li > span {
+    display: block;
+    padding: 10px 15px;
+}
+
+.paginated-list .pagination-bar ul.clickable > li > a,
+.paginated-list .pagination-bar ul.clickable > li > span {
     padding: 6px 12px;
 }
 
-.pagination-bar ul.dropdown-menu > li > span {
+.paginated-list .pagination-bar ul.dropdown-menu > li > span {
     padding: 3px 20px;
     cursor: pointer;
     display: block;
 }
 
-.clear-icon {
+.paginated-list .clear-icon {
     position: absolute;
     right: 10px;
     top: 0;

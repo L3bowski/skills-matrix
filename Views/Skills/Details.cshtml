@@ -6,9 +6,7 @@
 
 <div class="dynamic-content">
 
-    @Html.Partial("_Loader", new ViewDataDictionary(ViewData) {
-        {"loaderId", "loader"}
-    })
+    @Html.Partial("_Loader", "loader")
 
     <div id="view-wrapper" style="visibility: hidden;">
 
@@ -26,13 +24,9 @@
             </div>
 
             <h3>Employees</h3>
-            <ul id="employees-list" class="list-group clickable"></ul>
+            @Html.Partial("_PaginatedList", "employees")
 
-            @Html.Partial("_PaginatedList", new ViewDataDictionary(ViewData) {
-                {"searchListId", "add-employees"},
-                {"placeholder", "Add employees..."},
-                {"searcher", true}
-            })
+            @Html.Partial("_PaginatedList", "add-employees")
 
             <!-- Read actions -->
             <a id="edit-button" class="btn btn-primary" href="#">Edit</a>
@@ -51,7 +45,6 @@
 </div>
 
 @section scripts {
-    <script src="~/js/skills/details-html.js"></script>
+    <script src="~/js/skills/details-state.js"></script>
     <script src="~/js/skills/details-actions.js"></script>
-    <script src="~/js/skills/details.js"></script>
 }
